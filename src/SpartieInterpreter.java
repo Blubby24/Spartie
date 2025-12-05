@@ -38,12 +38,23 @@ public class SpartieInterpreter {
     // Statement Implementation
     private void interpretWhileStatement(Statement.WhileStatement statement) {
         // TODO: Evaluate the while statement based on the condition
-
+        boolean condition;
+        switch (statement.condition){
+            case Expression.UnaryExpression unaryExpression ->
+                    condition = Objects.equals(interpretUnary(unaryExpression), true);
+            case Expression.BinaryExpression binaryExpression ->
+                    condition = Objects.equals(interpretBinary(binaryExpression), true);
+            default -> condition = false;
+        }
+        if(condition){
+            interpret(statement.body);
+            interpretWhileStatement(statement);
+        }
     }
 
     private void interpretIfStatement(Statement.IfStatement statement) {
         // TODO: Evaluate the condition and then execute the appropriate branch
-        boolean condition = false;
+        boolean condition;
         switch (statement.condition){
             case Expression.UnaryExpression unaryExpression ->
                     condition = Objects.equals(interpretUnary(unaryExpression), true);
@@ -126,6 +137,9 @@ public class SpartieInterpreter {
         }
         if(expression.value instanceof Expression.VariableExpression){
           val = interpretVariable((Expression.VariableExpression) expression.value);
+        }
+        if(expression.value instanceof Expression.BinaryExpression){
+            val = interpretBinary((Expression.BinaryExpression) expression.value);
         }
         globalEnvironment.assign(expression.name, val);
 
