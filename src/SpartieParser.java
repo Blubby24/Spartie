@@ -79,7 +79,21 @@ public class SpartieParser {
         // TODO: We have the initializer, we have the condition, we have the increment. Take those components
         //  and convert into while loop. Hint: Build a block statement and then a while statement using the condition.
 
-        return body;
+        if (condition == null) {
+            condition = new Expression.LiteralExpression(true);
+        }
+
+        if (increment != null) {
+            body = new Statement.BlockStatement(List.of(body, new Statement.ExpressionStatement(increment)));
+        }
+
+        Statement whileLoop = new Statement.WhileStatement(condition, body);
+
+        if (initializer != null) {
+            return new Statement.BlockStatement(List.of(initializer, whileLoop));
+        }
+
+        return whileLoop;
 
     }
 

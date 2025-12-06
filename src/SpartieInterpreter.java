@@ -44,6 +44,12 @@ public class SpartieInterpreter {
                     condition = Objects.equals(interpretUnary(unaryExpression), true);
             case Expression.BinaryExpression binaryExpression ->
                     condition = Objects.equals(interpretBinary(binaryExpression), true);
+            case Expression.LogicalExpression logicalExpression ->
+                    condition = Objects.equals(interpretLogical(logicalExpression), true);
+            case Expression.LiteralExpression literalExpression ->
+                    condition = Objects.equals(interpretLiteral(literalExpression), true);
+            case Expression.VariableExpression variableExpression ->
+                    condition = Objects.equals(interpretVariable(variableExpression), true);
             default -> condition = false;
         }
         if(condition){
@@ -60,6 +66,12 @@ public class SpartieInterpreter {
                     condition = Objects.equals(interpretUnary(unaryExpression), true);
             case Expression.BinaryExpression binaryExpression ->
                     condition = Objects.equals(interpretBinary(binaryExpression), true);
+            case Expression.LogicalExpression logicalExpression ->
+                    condition = Objects.equals(interpretLogical(logicalExpression), true);
+            case Expression.LiteralExpression literalExpression ->
+                    condition = Objects.equals(interpretLiteral(literalExpression), true);
+            case Expression.VariableExpression variableExpression ->
+                    condition = Objects.equals(interpretVariable(variableExpression), true);
             default -> condition = false;
         }
         if(condition){
